@@ -1,6 +1,4 @@
-# Samarth Narula — Cuberto-Inspired Profile Website
-
-A premium static profile website for Samarth Narula, inspired by the animation style and editorial feel of Cuberto while using original content, layout, copy and visual assets.
+# Samarth Narula — Profile Website
 
 ## Stack
 
