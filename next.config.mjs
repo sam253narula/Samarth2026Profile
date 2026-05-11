@@ -1,9 +1,14 @@
-/** @type {import('next').NextConfig} */
+const repoName = "Samarth2026Profile";
+const isGithubPages = process.env.GITHUB_ACTIONS === "true";
+
 const nextConfig = {
-  output: 'export',
+  output: "export",
+  trailingSlash: true,
   images: {
-    unoptimized: true
-  }
+    unoptimized: true,
+  },
+  basePath: isGithubPages ? `/${repoName}` : "",
+  assetPrefix: isGithubPages ? `/${repoName}/` : "",
 };
 
 export default nextConfig;
