@@ -29,6 +29,9 @@ import SectionLabel from '@/components/SectionLabel';
 
 const navItems = ['work', 'services', 'experience', 'skills', 'contact'];
 
+const assetPath =
+  process.env.NODE_ENV === 'production' ? '/Samarth2026Profile' : '';
+
 const metrics = [
   { value: '80%', label: 'AWS cost reduction', detail: '$250K → $50K/month' },
   { value: '30K+', label: 'users served', detail: 'telecom cloud platform' },
@@ -251,108 +254,151 @@ function Header() {
 }
 
 function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start']
+  });
+
   const y = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const opacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
 
   return (
-    <section id="top" ref={heroRef} className="relative min-h-screen overflow-hidden px-4 pt-32 md:px-8 md:pt-40">
-      <motion.div style={{ y, opacity }} className="absolute right-[-20vw] top-24 h-[50vw] w-[50vw] rounded-full bg-acid/20 blur-[140px]" />
+    <section
+      id="top"
+      ref={heroRef}
+      className="relative min-h-screen overflow-hidden px-4 pt-28 md:px-8 md:pt-36"
+    >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-[-8rem] top-[18rem] h-64 w-64 rounded-full border border-paper/10 bg-paper/5 blur-sm"
-      />
-
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+        style={{ y, opacity }}
+        className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]"
+      >
         <div>
           <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="mb-8 inline-flex items-center gap-3 rounded-full border border-paper/10 bg-paper/5 px-4 py-2 text-sm font-medium text-paper/70"
+            className="mb-6 inline-flex rounded-full border border-paper/15 px-5 py-2 text-xs font-bold uppercase tracking-[0.28em] text-paper/70"
           >
-            <Sparkles className="h-4 w-4 text-acid" />
             Senior Cloud Architect · AI Platforms · Kubernetes · DevOps
           </motion.p>
-          <div className="overflow-hidden">
-            <motion.h1
-              initial={{ y: 130 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-[17vw] font-black uppercase leading-[0.78] tracking-[-0.09em] text-paper md:text-[13vw] lg:text-[9.2rem]"
-            >
-              Cloud
-              <span className="block big-outline">AI</span>
-              <span className="block">Architect</span>
-            </motion.h1>
-          </div>
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.32, duration: 0.8 }}
-            className="mt-8 flex max-w-3xl flex-col gap-8 md:flex-row md:items-end md:justify-between"
-          >
-            <p className="max-w-xl text-lg leading-8 text-paper/68 md:text-xl">
-              I design and build large-scale cloud, data and AI platforms across AWS and GCP — from enterprise lakehouses and
-              Kubernetes platforms to AI-powered engineering products and secure DevOps automation.
-            </p>
-            <a href="#work" className="cursor-target group grid h-24 w-24 shrink-0 place-items-center rounded-full border border-paper/20 bg-paper text-ink transition hover:bg-acid">
-              <ArrowDown className="h-7 w-7 transition group-hover:translate-y-1" />
-            </a>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+
+          <motion.h1
+            initial={{ opacity: 0, y: 46 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.52, duration: 0.7 }}
-            className="mt-10 flex flex-wrap gap-4"
+            transition={{ duration: 0.85, delay: 0.1 }}
+            className="font-display text-[18vw] font-black leading-[0.82] tracking-[-0.1em] text-paper md:text-[10vw] lg:text-[8.4vw]"
           >
-            <MagneticButton href="#contact" variant="acid">Hire me</MagneticButton>
-            <MagneticButton href="/Samarth-Narula-Resume.pdf" variant="light">Download resume</MagneticButton>
+            Cloud AI
+            <br />
+            Architect
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.22 }}
+            className="mt-8 max-w-2xl text-lg leading-8 text-paper/68 md:text-xl"
+          >
+            I design and build large-scale cloud, data and AI platforms across
+            AWS and GCP — from enterprise lakehouses and Kubernetes platforms to
+            AI-powered engineering products and secure DevOps automation.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.35 }}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+          <MagneticButton href="#contact" variant="acid" className="cursor-target">
+            Hire me
+            <ArrowDown className="h-4 w-4" />
+          </MagneticButton>
+
+          <MagneticButton
+            href={`${assetPath}/Samarth-Narula-Resume.pdf`}
+            variant="light"
+            className="cursor-target"
+          >
+            Download resume
+          </MagneticButton>
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 80, rotate: -4 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{ delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-xl lg:ml-auto"
-        >
-          <div className="card-sheen clip-card rounded-[2.2rem] border border-paper/10 bg-paper p-4 text-ink shadow-glow">
-            <div className="rounded-[1.6rem] bg-ink p-5 text-paper">
-              <div className="mb-14 flex items-center justify-between">
-                <span className="rounded-full bg-acid px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-ink">available</span>
-                <span className="text-xs uppercase tracking-[0.24em] text-paper/45">Mumbai · India</span>
-              </div>
-              <div className="relative overflow-hidden rounded-[1.5rem] border border-paper/10 bg-paper/5 p-5">
-                <div className="absolute inset-0 bg-radialGrid bg-[length:18px_18px] opacity-25" />
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-                  className="mx-auto h-52 w-52 rounded-full border border-dashed border-acid/70 p-8"
-                >
-                  <div className="grid h-full w-full place-items-center rounded-full bg-acid text-6xl font-black text-ink">SN</div>
-                </motion.div>
-                <div className="relative mt-8 grid grid-cols-2 gap-3">
-                  {['AWS', 'GCP', 'AI', 'K8s'].map((item) => (
-                    <div key={item} className="rounded-2xl border border-paper/10 bg-ink/70 p-4 text-center text-sm font-bold uppercase tracking-[0.18em]">
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-6 flex items-center justify-between rounded-full border border-paper/10 p-2 pl-5">
-                <span className="text-sm text-paper/60">10 years building enterprise systems</span>
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-paper text-ink"><Zap className="h-5 w-5" /></span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+<motion.div
+  initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
+  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+  transition={{ duration: 0.9, delay: 0.18 }}
+  className="relative mx-auto w-full max-w-[620px]"
+>
+  <div className="absolute -inset-8 rounded-[3rem] bg-acid/10 blur-3xl" />
+
+  <motion.div
+    animate={{ y: [0, -10, 0], rotate: [0, 1, 0] }}
+    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+    className="relative overflow-hidden rounded-[2.4rem] border border-paper/15 bg-paper/5 shadow-2xl"
+  >
+    <img
+      src={`${assetPath}/profile-photo.webp`}
+      alt="Samarth Narula - Cloud, AI and Platform Architect"
+      className="h-[560px] w-full object-cover object-center grayscale-[15%] transition duration-700 hover:scale-105 hover:grayscale-0 md:h-[620px]"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
+
+    {/* Top stat badges - no overlap with bottom text */}
+    <div className="absolute left-4 top-4 z-20 flex flex-col gap-3 sm:left-6 sm:top-6">
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="rounded-3xl border border-paper/15 bg-ink/80 px-5 py-4 shadow-2xl backdrop-blur-xl"
+      >
+        <p className="text-3xl font-black tracking-[-0.08em] text-acid md:text-4xl">
+          30K+
+        </p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/55 md:text-xs">
+          users served
+        </p>
+      </motion.div>
+    </div>
+
+    <div className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6">
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        className="rounded-3xl border border-paper/15 bg-ink/80 px-5 py-4 shadow-2xl backdrop-blur-xl"
+      >
+        <p className="text-3xl font-black tracking-[-0.08em] text-acid md:text-4xl">
+          10+
+        </p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/55 md:text-xs">
+          years experience
+        </p>
+      </motion.div>
+    </div>
+
+    {/* Bottom info card */}
+    <div className="absolute bottom-4 left-4 right-4 z-10 sm:bottom-6 sm:left-6 sm:right-6">
+      <div className="rounded-[2rem] border border-paper/15 bg-ink/80 p-5 shadow-2xl backdrop-blur-xl md:p-6">
+        <p className="text-xs font-black uppercase tracking-[0.26em] text-acid">
+          Available
+        </p>
+
+        <p className="mt-2 text-2xl font-black tracking-[-0.04em] text-paper md:text-3xl">
+          Mumbai · India
+        </p>
+
+        <p className="mt-3 max-w-xl text-sm leading-6 text-paper/65 md:text-base md:leading-7">
+          Open to Cloud Architect, AI Architect, Platform Engineering and
+          consulting opportunities.
+        </p>
       </div>
+    </div>
+  </motion.div>
+</motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -367,6 +413,61 @@ function Marquee() {
             {word} <span className="text-acid">•</span>
           </span>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function BrandSnapshot() {
+  return (
+    <section className="px-4 py-24 md:px-8">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.75 }}
+        >
+          <p className="mb-5 text-xs font-black uppercase tracking-[0.32em] text-acid">
+            /personal brand
+          </p>
+
+          <h2 className="font-display text-5xl font-black leading-[0.9] tracking-[-0.06em] text-paper md:text-7xl">
+            Profile built for trust, search and sharing.
+          </h2>
+
+          <p className="mt-6 max-w-xl text-lg leading-8 text-paper/60">
+            A quick visual snapshot of my positioning across cloud architecture,
+            AI platforms, Kubernetes, DevOps and GenAI engineering.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            {['AWS', 'GCP', 'Kubernetes', 'DevOps', 'GenAI'].map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-paper/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-paper/65"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.75, delay: 0.1 }}
+          className="card-sheen overflow-hidden rounded-[2rem] border border-paper/15 bg-paper/5 p-3 shadow-2xl"
+        >
+          <img
+            src={`${assetPath}/og-image.png`}
+            alt="Samarth Narula - Cloud, AI and Platform Architect social preview"
+            className="w-full rounded-[1.5rem] object-cover"
+          />
+        </motion.div>
       </div>
     </section>
   );
@@ -642,12 +743,49 @@ function Footer() {
 }
 
 export default function Home() {
+  <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Samarth Narula',
+      url: 'https://sam253narula.github.io/Samarth2026Profile',
+      jobTitle: 'Senior Cloud Architect',
+      email: 'mailto:samarthnarula253@gmail.com',
+      telephone: '+91-9930864102',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Mumbai',
+        addressCountry: 'IN'
+      },
+      knowsAbout: [
+        'AWS',
+        'Google Cloud',
+        'Kubernetes',
+        'DevOps',
+        'AI Platforms',
+        'MLOps',
+        'Data Engineering',
+        'Cybersecurity Automation',
+        'Terraform',
+        'Spring Boot',
+        'Kafka',
+        'BigQuery'
+      ],
+      sameAs: [
+        'https://github.com/sam253narula'
+      ]
+    })
+  }}
+/>
   return (
     <main className="bg-ink text-paper">
       <CustomCursor />
       <Header />
       <Hero />
       <Marquee />
+      <BrandSnapshot />
       <Metrics />
       <Work />
       <Services />
