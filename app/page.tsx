@@ -288,7 +288,7 @@ function Hero() {
             initial={{ opacity: 0, y: 46 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.1 }}
-            className="font-display text-[18vw] font-black leading-[0.82] tracking-[-0.1em] text-paper md:text-[10vw] lg:text-[8.4vw]"
+            className="font-display text-[18vw] font-black leading-[0.82] tracking-[-0.070em] text-paper md:text-[10vw] lg:text-[8.4vw]"
           >
             Cloud AI
             <br />
