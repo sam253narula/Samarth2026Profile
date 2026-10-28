@@ -1,36 +1,10 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Award,
-  BrainCircuit,
-  Cloud,
-  Code2,
-  Database,
-  GitBranch,
-  Globe2,
-  Layers3,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-  TerminalSquare,
-  Users2,
-  Zap
-} from 'lucide-react';
-import { useRef } from 'react';
-import CustomCursor from '@/components/CustomCursor';
-import MagneticButton from '@/components/MagneticButton';
-import SectionLabel from '@/components/SectionLabel';
+import { useState } from 'react';
+import { ArrowUpRight, ArrowRight, ArrowDown, Cloud, BrainCircuit, GitBranch, Database, MapPin, Mail, Phone, MessageCircle, Award, Github, Linkedin, Menu, X, Check, Layers3, TerminalSquare } from 'lucide-react';
 
-const navItems = ['work', 'services', 'experience', 'skills', 'contact'];
-
-const assetPath =
-  process.env.NODE_ENV === 'production' ? '/Samarth2026Profile' : '';
+const assetPath = process.env.NODE_ENV === 'production' ? '/Samarth2026Profile' : '';
+const navItems = ['work', 'services', 'experience', 'skills'];
 
 const metrics = [
   { value: '80%', label: 'AWS cost reduction', detail: '$250K → $50K/month' },
@@ -239,593 +213,86 @@ const certifications = [
   'Professional Cloud Security Engineer'
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 }
-};
+function SectionHeading({ number, label, title, text }: { number: string; label: string; title: string; text?: string }) {
+  return <div className="section-heading"><div><p className="eyebrow"><span>{number}</span> {label}</p><h2>{title}</h2></div>{text && <p className="section-intro">{text}</p>}</div>;
+}
 
 function Header() {
-  return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed left-0 right-0 top-0 z-50 px-4 py-4 md:px-8"
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-paper/10 bg-ink/70 px-4 py-3 shadow-soft backdrop-blur-xl md:px-6">
-        <a href="#top" className="cursor-target flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-paper text-sm font-black text-ink">SN</span>
-          <span className="hidden text-sm font-semibold uppercase tracking-[0.2em] text-paper/80 sm:inline">Samarth Narula</span>
-        </a>
-        <div className="hidden items-center gap-6 md:flex">
-          {navItems.map((item) => (
-            <a key={item} href={`#${item}`} className="text-xs font-semibold uppercase tracking-[0.22em] text-paper/50 transition hover:text-paper">
-              {item}
-            </a>
-          ))}
-        </div>
-        <a
-          href="mailto:samarthnarula253@gmail.com"
-          className="group inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink transition hover:bg-acid md:w-auto md:px-5"
-        >
-          <span className="hidden text-xs font-bold uppercase tracking-[0.2em] md:inline">Let’s talk</span>
-          <ArrowUpRight className="h-4 w-4 md:ml-2" />
-        </a>
-      </nav>
-    </motion.header>
-  );
+  const [open, setOpen] = useState(false);
+  return <header className="site-header"><div className="shell header-inner">
+    <a className="wordmark" href="#top" aria-label="Samarth Narula, home"><span className="monogram">sn<span>.</span></span><span>Samarth Narula<span className="wordmark-sub">Cloud & AI Architect</span></span></a>
+    <nav className="desktop-nav" aria-label="Main navigation">{navItems.map(item => <a key={item} href={`#${item}`}>{item}</a>)}</nav>
+    <a className="header-cta" href="#contact">Let’s talk <ArrowUpRight size={16}/></a>
+    <button className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? 'Close navigation' : 'Open navigation'}>{open ? <X/> : <Menu/>}</button>
+  </div>{open && <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation">{[...navItems, 'contact'].map(item => <a key={item} href={`#${item}`} onClick={() => setOpen(false)}>{item}<ArrowUpRight size={18}/></a>)}</nav>}</header>;
 }
 
 function Hero() {
-  const heroRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start']
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 140]);
-  const opacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
-
-  return (
-    <section
-      id="top"
-      ref={heroRef}
-      className="relative min-h-screen overflow-hidden px-4 pt-28 md:px-8 md:pt-36"
-    >
-      <motion.div
-        style={{ y, opacity }}
-        className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]"
-      >
-        <div>
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="mb-6 inline-flex rounded-full border border-paper/15 px-5 py-2 text-xs font-bold uppercase tracking-[0.28em] text-paper/70"
-          >
-            Senior Cloud Architect · AI Platforms · Kubernetes · DevOps
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 46 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.1 }}
-            className="font-display text-[18vw] font-black leading-[0.82] tracking-[-0.070em] text-paper md:text-[10vw] lg:text-[8.4vw]"
-          >
-            Cloud AI
-            <br />
-            Architect
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.22 }}
-            className="mt-8 max-w-2xl text-lg leading-8 text-paper/68 md:text-xl"
-          >
-            I design and build large-scale cloud, data and AI platforms across
-            AWS and GCP — from enterprise lakehouses and Kubernetes platforms to
-            AI-powered engineering products and secure DevOps automation.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.35 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
-          <MagneticButton href="#contact" variant="acid" className="cursor-target">
-            Hire me
-            <ArrowDown className="h-4 w-4" />
-          </MagneticButton>
-
-          <MagneticButton
-            href={`${assetPath}/Samarth-Narula-Resume.pdf`}
-            variant="light"
-            className="cursor-target"
-          >
-            Download resume
-          </MagneticButton>
-          </motion.div>
-        </div>
-
-<motion.div
-  initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
-  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-  transition={{ duration: 0.9, delay: 0.18 }}
-  className="relative mx-auto w-full max-w-[620px]"
->
-  <div className="absolute -inset-8 rounded-[3rem] bg-acid/10 blur-3xl" />
-
-  <motion.div
-    animate={{ y: [0, -10, 0], rotate: [0, 1, 0] }}
-    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-    className="relative overflow-hidden rounded-[2.4rem] border border-paper/15 bg-paper/5 shadow-2xl"
-  >
-    <img
-      src={`${assetPath}/profile-photo.webp`}
-      alt="Samarth Narula - Cloud, AI and Platform Architect"
-      className="h-[560px] w-full object-cover object-center grayscale-[15%] transition duration-700 hover:scale-105 hover:grayscale-0 md:h-[620px]"
-    />
-
-    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-
-    {/* Top stat badges - no overlap with bottom text */}
-    <div className="absolute left-4 top-4 z-20 flex flex-col gap-3 sm:left-6 sm:top-6">
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="rounded-3xl border border-paper/15 bg-ink/80 px-5 py-4 shadow-2xl backdrop-blur-xl"
-      >
-        <p className="text-3xl font-black tracking-[-0.08em] text-acid md:text-4xl">
-          30K+
-        </p>
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/55 md:text-xs">
-          users served
-        </p>
-      </motion.div>
+  return <section id="top" className="hero shell">
+    <div className="hero-copy"><p className="eyebrow"><span className="status-dot"/> Independent consultant · Mumbai, India</p>
+      <h1>Complex systems.<br/><span className="serif">Clear solutions.</span></h1>
+      <p className="hero-description">I’m Samarth. I turn ambitious cloud and AI ideas into platforms that work in the real world.</p>
+      <p className="hero-detail">Cloud architecture. AI engineering. Hands-on delivery.<br/>Founder of Narula Cloud & AI Consulting.</p>
+      <div className="hero-actions"><a className="button button-dark" href="#work">Explore my work <ArrowDown size={17}/></a><a className="text-link" href={`${assetPath}/Samarth-Narula-Resume.pdf`} target="_blank" rel="noreferrer">View résumé <ArrowUpRight size={17}/></a></div>
+      <div className="hero-platforms"><span>BUILT WITH</span><span>AWS</span><span>Google Cloud</span><span>Kubernetes</span></div>
     </div>
-
-    <div className="absolute right-4 top-4 z-20 sm:right-6 sm:top-6">
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="rounded-3xl border border-paper/15 bg-ink/80 px-5 py-4 shadow-2xl backdrop-blur-xl"
-      >
-        <p className="text-3xl font-black tracking-[-0.08em] text-acid md:text-4xl">
-          10+
-        </p>
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-paper/55 md:text-xs">
-          years experience
-        </p>
-      </motion.div>
-    </div>
-
-    {/* Bottom info card */}
-    <div className="absolute bottom-4 left-4 right-4 z-10 sm:bottom-6 sm:left-6 sm:right-6">
-      <div className="rounded-[2rem] border border-paper/15 bg-ink/80 p-5 shadow-2xl backdrop-blur-xl md:p-6">
-        <p className="text-xs font-black uppercase tracking-[0.26em] text-acid">
-          Available
-        </p>
-
-        <p className="mt-2 text-2xl font-black tracking-[-0.04em] text-paper md:text-3xl">
-          Mumbai · India
-        </p>
-
-        <p className="mt-3 max-w-xl text-sm leading-6 text-paper/65 md:text-base md:leading-7">
-          Open to Cloud Architect, AI Architect, Platform Engineering and
-          consulting opportunities.
-        </p>
-      </div>
-    </div>
-  </motion.div>
-</motion.div>
-      </motion.div>
-    </section>
-  );
+    <div className="hero-visual"><div className="portrait-frame">
+      <div className="portrait-label"><span className="status-dot"/> OPEN TO COLLABORATE <ArrowUpRight size={16}/></div>
+      <img src={`${assetPath}/profile-photo.webp`} alt="Samarth Narula, Cloud and AI Architect" width="640" height="720" fetchPriority="high"/>
+      <div className="portrait-caption"><span>Architect.<br/>Engineer. Builder.</span><span className="portrait-location"><MapPin size={14}/> Mumbai, IN</span></div>
+    </div><div className="architecture-note"><span className="note-icon"><Layers3 size={21}/></span><div><strong>From architecture to impact.</strong><span>AWS · GCP · AI · DevOps</span></div><span className="note-mark">↗</span></div><span className="visual-index">01 / A LITTLE ABOUT ME</span></div>
+    <a href="#impact" className="scroll-note"><span>SCROLL TO EXPLORE</span><ArrowDown size={14}/></a>
+  </section>;
 }
 
-function Marquee() {
-  const words = ['Cloud Architecture', 'AI Platforms', 'Kubernetes', 'DevOps', 'Data Lakes', 'Security', 'Cost Optimization', 'RAG Workflows'];
-  return (
-    <section className="overflow-hidden border-y border-paper/10 py-6">
-      <div className="marquee-track flex w-max gap-8 whitespace-nowrap">
-        {[...words, ...words, ...words, ...words].map((word, index) => (
-          <span key={`${word}-${index}`} className="font-display text-5xl font-black uppercase tracking-[-0.06em] text-paper/90 md:text-7xl">
-            {word} <span className="text-acid">•</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function BrandSnapshot() {
-  return (
-    <section className="px-4 py-24 md:px-8">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.75 }}
-        >
-          <p className="mb-5 text-xs font-black uppercase tracking-[0.32em] text-acid">
-            /personal brand
-          </p>
-
-          <h2 className="font-display text-5xl font-black leading-[0.9] tracking-[-0.06em] text-paper md:text-7xl">
-            Profile built for trust, search and sharing.
-          </h2>
-
-          <p className="mt-6 max-w-xl text-lg leading-8 text-paper/60">
-            A quick visual snapshot of my positioning across cloud architecture,
-            AI platforms, Kubernetes, DevOps and GenAI engineering.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            {['AWS', 'GCP', 'Kubernetes', 'DevOps', 'GenAI'].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-paper/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-paper/65"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.75, delay: 0.1 }}
-          className="card-sheen overflow-hidden rounded-[2rem] border border-paper/15 bg-paper/5 p-3 shadow-2xl"
-        >
-          <img
-            src={`${assetPath}/og-image.png`}
-            alt="Samarth Narula - Cloud, AI and Platform Architect social preview"
-            className="w-full rounded-[1.5rem] object-cover"
-          />
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function Metrics() {
-  return (
-    <section className="px-4 py-20 md:px-8">
-      <div className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-[2rem] border border-paper/10 bg-paper/10 md:grid-cols-4">
-        {metrics.map((metric, index) => (
-          <motion.div
-            key={metric.label}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: index * 0.08, duration: 0.7 }}
-            className="bg-ink p-8 md:p-10"
-          >
-            <p className="font-display text-6xl font-black tracking-[-0.08em] text-paper md:text-7xl">{metric.value}</p>
-            <p className="mt-4 text-lg font-semibold text-paper">{metric.label}</p>
-            <p className="mt-2 text-sm text-paper/50">{metric.detail}</p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Services() {
-  return (
-    <section id="services" className="px-4 py-24 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <SectionLabel eyebrow="services" title="What I build for teams that need scale." />
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ delay: index * 0.08, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -12, rotate: index % 2 === 0 ? -1.5 : 1.5 }}
-                className="card-sheen group rounded-[2rem] border border-paper/10 bg-paper/5 p-6 transition-colors hover:bg-paper hover:text-ink"
-              >
-                <div className="mb-14 flex items-center justify-between">
-                  <div className="grid h-14 w-14 place-items-center rounded-full bg-paper text-ink transition group-hover:bg-ink group-hover:text-paper">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <span className="font-display text-5xl font-black tracking-[-0.08em] text-paper/10 transition group-hover:text-ink/10">0{index + 1}</span>
-                </div>
-                <h3 className="font-display text-3xl font-black tracking-[-0.05em]">{service.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-paper/60 transition group-hover:text-ink/65">{service.text}</p>
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {service.tags.map((tag) => (
-                    <span key={tag} className="rounded-full border border-paper/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-paper/50 transition group-hover:border-ink/15 group-hover:text-ink/60">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
+function Impact() {
+  return <section id="impact" className="impact-section"><div className="shell"><p className="eyebrow">GOOD ARCHITECTURE. MEASURABLE IMPACT.</p><div className="metrics-grid">{metrics.map(metric => <div className="metric" key={metric.label}><strong>{metric.value}</strong><h3>{metric.label}</h3><p>{metric.detail}</p></div>)}</div></div></section>;
 }
 
 function Work() {
-  return (
-    <section id="work" className="px-4 py-24 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <SectionLabel eyebrow="selected work" title="Enterprise work, presented like products." />
-        <div className="space-y-5">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.title}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.05 }}
-              className="group relative overflow-hidden rounded-[2.5rem] border border-paper/10 bg-paper text-ink"
-            >
-              <div className={`absolute right-[-15%] top-[-60%] h-[28rem] w-[28rem] rounded-full bg-gradient-to-br ${project.accent} opacity-70 blur-3xl transition duration-700 group-hover:scale-125`} />
-              <div className="relative grid gap-8 p-7 md:grid-cols-[0.26fr_1fr_0.55fr] md:p-10 lg:p-14">
-                <span className="font-display text-7xl font-black tracking-[-0.09em] text-ink/12">{project.number}</span>
-                <div>
-                  <p className="mb-4 text-sm font-bold uppercase tracking-[0.22em] text-ink/45">{project.company}</p>
-                  <h3 className="max-w-3xl font-display text-5xl font-black leading-[0.9] tracking-[-0.07em] md:text-7xl">{project.title}</h3>
-                </div>
-                <div className="self-end">
-                  <p className="text-base leading-7 text-ink/68">{project.description}</p>
-                  <div className="mt-8 flex flex-wrap gap-2">
-                    {project.stack.map((item) => (
-                      <span key={item} className="rounded-full border border-ink/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-ink/60">{item}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  const icons = [BrainCircuit, Database, Cloud, Layers3, TerminalSquare, GitBranch];
+  return <section id="work" className="section shell"><SectionHeading number="01" label="Selected work" title="Built for real-world complexity." text="A selection of platforms, products and engineering challenges across enterprise cloud, AI and data."/>
+    <div className="projects-grid">{projects.map((project, index) => { const Icon = icons[index]; return <article className={`project-card project-${index}`} key={project.title}>
+      <div className="project-illustration" aria-hidden="true"><div className="diagram-topline"><span>ENGINEERING / {project.number}</span><span className="diagram-live"><i/> SYSTEM DESIGN</span></div><div className="diagram"><div className="diagram-node node-left">{['SCAN', 'INGEST', 'ACCOUNT', 'SENSOR', 'MARKET', 'REQUEST'][index]}</div><span className="diagram-connector"/><div className="diagram-core"><Icon size={33} strokeWidth={1.3}/></div><span className="diagram-connector"/><div className="diagram-node node-right">{['REMEDIATE', 'ACTIVATE', 'DEPLOY', 'MAP', 'INSIGHT', 'PROCESS'][index]}</div></div><div className="diagram-bottomline"><span>ARCHITECTURE → IMPLEMENTATION</span><span>↗</span></div></div>
+      <div className="project-copy"><p className="eyebrow">{project.company}</p><h3>{project.title}</h3><p>{project.description}</p><ul className="tags" aria-label="Technologies">{project.stack.map(item => <li key={item}>{item}</li>)}</ul></div>
+    </article>; })}</div>
+  </section>;
+}
+
+function Services() {
+  return <section id="services" className="services-section"><div className="section shell"><SectionHeading number="02" label="How I can help" title="Your next challenge. My kind of work." text="Independent consulting that connects the big picture with the details needed to ship."/>
+    <div className="services-grid">{services.map((service, index) => { const Icon = service.icon; return <article className="service-card" key={service.title}><div className="service-top"><Icon size={27} strokeWidth={1.4}/><span>0{index+1}</span></div><h3>{service.title}</h3><p>{service.text}</p><div className="service-footer">{service.tags.join(' / ')}</div></article>; })}</div>
+    <div className="consulting-strip"><span><span className="status-dot"/> Available through <strong>Narula Cloud & AI Consulting</strong></span><a className="text-link" href="#contact">Discuss a project <ArrowUpRight size={17}/></a></div>
+  </div></section>;
 }
 
 function Experience() {
-  return (
-    <section id="experience" className="px-4 py-24 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <SectionLabel eyebrow="Career Evolution" title="Full journey." />
-        <div className="rounded-[2.5rem] border border-paper/10 bg-paper/5 p-4 md:p-8">
-          {experience.map((job, index) => (
-            <motion.div
-              key={`${job.company}-${job.period}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: index * 0.04, duration: 0.65 }}
-              className="group grid gap-6 border-b border-paper/10 py-8 last:border-b-0 md:grid-cols-[0.24fr_0.36fr_1fr] md:py-10"
-            >
-              <div>
-                <p className="font-display text-5xl font-black tracking-[-0.08em] text-paper/14 group-hover:text-acid">0{index + 1}</p>
-                <p className="mt-3 text-sm uppercase tracking-[0.18em] text-paper/45">{job.period}</p>
-              </div>
-              <div>
-                <h3 className="font-display text-3xl font-black tracking-[-0.05em] text-paper">{job.role}</h3>
-                <p className="mt-2 text-lg text-paper/70">{job.company}</p>
-                <p className="mt-1 text-sm text-paper/45">{job.client}</p>
-                <p className="mt-3 inline-flex items-center gap-2 text-sm text-paper/45"><MapPin className="h-4 w-4" />{job.location}</p>
-              </div>
-              <ul className="space-y-4 text-base leading-7 text-paper/62">
-                {job.points.map((point) => (
-                  <li key={point} className="flex gap-3">
-                    <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-acid" />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="experience" className="section shell"><SectionHeading number="03" label="Experience" title="A career of building what’s next." text="From enterprise engineering to independent consulting. Deep technical work, across teams and industries."/>
+    <div className="experience-list">{experience.map((job,index) => <details key={`${job.company}-${job.period}`} className={`experience-item ${index < 2 ? 'current-role' : ''}`} open={index < 2}>
+      <summary><div className="experience-date"><span>{job.period}</span>{index < 2 && <span className="current-badge"><span className="status-dot"/> Current</span>}</div><div className="experience-title"><h3>{job.role}</h3><p>{job.company}</p></div><span className="experience-toggle" aria-hidden="true">+</span></summary>
+      <div className="experience-body"><div className="experience-context"><p>{job.client}</p><span><MapPin size={14}/>{job.location}</span></div><ul>{job.points.map(point => <li key={point}><ArrowUpRight size={15}/><span>{point}</span></li>)}</ul></div>
+    </details>)}</div><p className="experience-hint">Select any role to explore the work.</p>
+  </section>;
 }
 
 function Skills() {
-  return (
-    <section id="skills" className="relative overflow-hidden bg-paper px-4 py-24 text-ink md:px-8">
-      <div className="absolute inset-0 bg-radialGrid bg-[length:20px_20px] opacity-25 invert" />
-      <div className="relative mx-auto max-w-7xl">
-        <div className="mb-12 grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-          <div>
-            <p className="mb-4 text-sm font-black uppercase tracking-[0.28em] text-ink/45">/toolkit</p>
-            <h2 className="font-display text-6xl font-black leading-[0.85] tracking-[-0.07em] md:text-8xl">Skills, certs & proof.</h2>
-          </div>
-          <p className="max-w-2xl text-lg leading-8 text-ink/65">
-            A profile built around cloud architecture, AI engineering, DevOps automation, data platforms and hands-on delivery across enterprise systems.
-          </p>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-5">
-          {skillGroups.map((group, index) => (
-            <motion.div
-              key={group.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06, duration: 0.65 }}
-              className="rounded-[2rem] border border-ink/10 bg-ink p-6 text-paper shadow-soft"
-            >
-              <h3 className="font-display text-3xl font-black tracking-[-0.05em]">{group.title}</h3>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span key={item} className="rounded-full border border-paper/10 px-3 py-1 text-xs font-semibold text-paper/62">{item}</span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        <div className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[2rem] bg-ink p-8 text-paper">
-            <div className="mb-8 flex items-center gap-3"><Award className="h-6 w-6 text-acid" /><h3 className="font-display text-4xl font-black tracking-[-0.06em]">Certifications</h3></div>
-            <div className="grid gap-3">
-              {certifications.map((cert) => (
-                <div key={cert} className="rounded-2xl border border-paper/10 p-4 text-sm text-paper/72">{cert}</div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-[2rem] border border-ink/10 bg-white/50 p-8">
-            <div className="mb-8 flex items-center gap-3"><Globe2 className="h-6 w-6" /><h3 className="font-display text-4xl font-black tracking-[-0.06em]">Publications & recognition</h3></div>
-            <div className="grid gap-4">
-              <a className="cursor-target group rounded-3xl border border-ink/10 bg-paper p-5 transition hover:bg-acid" href="https://github.com/marketplace/actions/github-pr-review-agent" target="_blank" rel="noreferrer">
-                <p className="text-sm uppercase tracking-[0.2em] text-ink/45">GitHub Marketplace</p>
-                <p className="mt-2 text-xl font-bold">GitHub AI PR Review Agent</p>
-              </a>
-              <a className="cursor-target group rounded-3xl border border-ink/10 bg-paper p-5 transition hover:bg-acid" href="https://www.udemy.com/user/samarth-narula-3/" target="_blank" rel="noreferrer">
-                <p className="text-sm uppercase tracking-[0.2em] text-ink/45">Instructor</p>
-                <p className="mt-2 text-xl font-bold">Udemy & Coursera course publication</p>
-              </a>
-              <a className="cursor-target group rounded-3xl border border-ink/10 bg-paper p-5 transition hover:bg-acid" href="https://do.starweaver.com/channels/samarth-narula/about-me" target="_blank" rel="noreferrer">
-                <p className="text-sm uppercase tracking-[0.2em] text-ink/45">Recognition</p>
-                <p className="mt-2 text-xl font-bold">Cloud Domain Expert listing + Marquis Who’s Who Honored Listee</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="skills" className="skills-section"><div className="section shell"><SectionHeading number="04" label="The toolkit" title="Depth where it matters." text="A practical toolkit for designing, building and operating cloud and AI platforms."/>
+    <div className="toolkit-grid">{skillGroups.map((group,index) => <div className="toolkit-group" key={group.title}><span className="toolkit-number">0{index+1}</span><h3>{group.title}</h3><ul>{group.items.map(item => <li key={item}>{item}</li>)}</ul></div>)}</div>
+    <div className="credentials-grid"><div className="certifications"><div className="credential-heading"><Award size={22}/><h3>Cloud credentials</h3><span>AWS + GCP</span></div><ul>{certifications.map(cert => <li key={cert}><Check size={15}/>{cert}</li>)}</ul><p className="credential-note">Certifications earned across cloud architecture, security, DevOps and machine learning.</p></div>
+      <div className="publications"><p className="eyebrow">Beyond the day job</p><h3>Build. Share. Repeat.</h3><p>Open-source tools, technical courses and industry perspectives.</p>{[
+        {label:'GitHub AI PR Review Agent',type:'OPEN SOURCE',href:'https://github.com/marketplace/actions/github-pr-review-agent'},
+        {label:'Technical courses on Udemy',type:'TEACHING',href:'https://www.udemy.com/user/samarth-narula-3/'},
+        {label:'Technical courses on Coursera',type:'TEACHING',href:'https://www.coursera.org/instructor/samarth-narula'},
+        {label:'Cloud expertise & recognition',type:'COMMUNITY',href:'https://do.starweaver.com/channels/samarth-narula/about-me'}
+      ].map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer"><span><small>{link.type}</small>{link.label}</span><ArrowUpRight size={20}/></a>)}</div>
+    </div>
+  </div></section>;
 }
 
 function Contact() {
-  return (
-    <section id="contact" className="px-4 py-24 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 rounded-[3rem] border border-paper/10 bg-paper p-6 text-ink md:grid-cols-[0.9fr_1.1fr] md:p-12 lg:p-16">
-          <div className="flex flex-col justify-between gap-12">
-            <div>
-              <p className="mb-4 text-sm font-black uppercase tracking-[0.28em] text-ink/45">/contact</p>
-              <h2 className="font-display text-6xl font-black leading-[1.05] tracking-[-0.06em] md:text-8xl">Have a cloud or AI build?</h2>
-              <p className="mt-8 max-w-xl text-lg leading-8 text-ink/65">
-                I’m open to Cloud Architect, AI Architect, DevOps, platform engineering and independent consulting opportunities.
-              </p>
-            </div>
-            <div className="grid gap-3 text-sm text-ink/70">
-              <a className="cursor-target flex items-center gap-3 rounded-full bg-ink px-5 py-4 text-paper transition hover:bg-acid hover:text-ink" href="mailto:samarthnarula253@gmail.com"><Mail className="h-5 w-5" />samarthnarula253@gmail.com</a>
-              <a className="cursor-target flex items-center gap-3 rounded-full bg-ink px-5 py-4 text-paper transition hover:bg-acid hover:text-ink" href="tel:+919930864102"><Phone className="h-5 w-5" />+91 9930864102</a>
-              <a className="cursor-target flex items-center gap-3 rounded-full bg-ink px-5 py-4 text-paper transition hover:bg-acid hover:text-ink" href="https://wa.me/919930864102" target="_blank" rel="noreferrer"><MessageCircle className="h-5 w-5" />WhatsApp me</a>
-            </div>
-          </div>
-          <form action="mailto:samarthnarula253@gmail.com" method="post" encType="text/plain" className="rounded-[2rem] bg-ink p-5 text-paper md:p-8">
-            <div className="grid gap-4">
-              <label className="grid gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-paper/45">
-                Name
-                <input name="name" placeholder="Your name" className="rounded-2xl border border-paper/10 bg-paper/5 px-5 py-4 text-base font-medium normal-case tracking-normal text-paper outline-none transition focus:border-acid" />
-              </label>
-              <label className="grid gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-paper/45">
-                Email
-                <input name="email" type="email" placeholder="you@company.com" className="rounded-2xl border border-paper/10 bg-paper/5 px-5 py-4 text-base font-medium normal-case tracking-normal text-paper outline-none transition focus:border-acid" />
-              </label>
-              <label className="grid gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-paper/45">
-                Project
-                <textarea name="message" rows={6} placeholder="Tell me what you want to build..." className="rounded-2xl border border-paper/10 bg-paper/5 px-5 py-4 text-base font-medium normal-case tracking-normal text-paper outline-none transition focus:border-acid" />
-              </label>
-              <button className="cursor-target mt-3 inline-flex items-center justify-center gap-3 rounded-full bg-acid px-6 py-5 text-sm font-black uppercase tracking-[0.2em] text-ink transition hover:bg-paper" type="submit">
-                Send inquiry <ArrowUpRight className="h-5 w-5" />
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-paper/10 px-4 py-12 md:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <p className="font-display text-3xl font-black tracking-[-0.06em] text-paper">Samarth Narula</p>
-        <div className="flex flex-wrap gap-4 text-sm text-paper/50">
-          <a href="#top" className="hover:text-paper">Back to top</a>
-          <a href="/Samarth-Narula-Resume.pdf" className="hover:text-paper">Resume</a>
-          <a href="mailto:samarthnarula253@gmail.com" className="hover:text-paper">Email</a>
-        </div>
-      </div>
-    </footer>
-  );
+  return <section id="contact" className="section shell"><div className="contact-panel"><div className="contact-top"><p className="eyebrow"><span className="status-dot"/> LET’S BUILD SOMETHING THAT MATTERS</p><span>MUMBAI, INDIA · WORKING GLOBALLY</span></div><div className="contact-main"><h2>Big ideas.<br/><span className="serif">Let’s make them real.</span></h2><div><p>Have a platform to modernize, an AI idea to build, or a cloud challenge to solve? Let’s talk.</p><a className="button button-accent" href="mailto:samarthnarula253@gmail.com">Start a conversation <ArrowUpRight size={19}/></a></div></div><div className="contact-bottom"><a href="mailto:samarthnarula253@gmail.com"><Mail size={16}/>samarthnarula253@gmail.com</a><a href="tel:+919930864102"><Phone size={16}/>+91 9930864102</a><a href="https://wa.me/919930864102" target="_blank" rel="noreferrer"><MessageCircle size={17}/>WhatsApp <ArrowUpRight size={14}/></a></div></div></section>;
 }
 
 export default function Home() {
-  <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: 'Samarth Narula',
-      url: 'https://sam253narula.github.io/Samarth2026Profile',
-      jobTitle: 'Senior Cloud Architect',
-      email: 'mailto:samarthnarula253@gmail.com',
-      telephone: '+91-9930864102',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Mumbai',
-        addressCountry: 'IN'
-      },
-      knowsAbout: [
-        'AWS',
-        'Google Cloud',
-        'Kubernetes',
-        'DevOps',
-        'AI Platforms',
-        'MLOps',
-        'Data Engineering',
-        'Cybersecurity Automation',
-        'Terraform',
-        'Spring Boot',
-        'Kafka',
-        'BigQuery'
-      ],
-      sameAs: [
-        'https://github.com/sam253narula'
-      ]
-    })
-  }}
-/>
-  return (
-    <main className="bg-ink text-paper">
-      <CustomCursor />
-      <Header />
-      <Hero />
-      <Marquee />
-      <BrandSnapshot />
-      <Metrics />
-      <Work />
-      <Services />
-      <Experience />
-      <Skills />
-      <Contact />
-      <Footer />
-
-      <a
-        href="https://wa.me/919930864102"
-        target="_blank"
-        rel="noreferrer"
-        className="cursor-target fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-acid text-ink shadow-glow transition hover:scale-110 md:h-16 md:w-16"
-        aria-label="WhatsApp Samarth"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </a>
-    </main>
-  );
+  return <><a href="#main-content" className="skip-link">Skip to content</a><Header/><main id="main-content"><Hero/><Impact/><Work/><Services/><Experience/><Skills/><Contact/></main><footer className="site-footer shell"><a className="footer-brand" href="#top">Samarth Narula<span>Cloud & AI Architect · Independent Consultant</span></a><div className="footer-links"><a href="https://github.com/sam253narula" target="_blank" rel="noreferrer" aria-label="Samarth on GitHub"><Github size={19}/></a><a href="https://linkedin.com/in/samarth-narula" target="_blank" rel="noreferrer" aria-label="Samarth on LinkedIn"><Linkedin size={19}/></a><a href={`${assetPath}/Samarth-Narula-Resume.pdf`} target="_blank" rel="noreferrer">Résumé <ArrowUpRight size={15}/></a><a href="#top">Back to top <ArrowUpRight size={15}/></a></div></footer></>;
 }
