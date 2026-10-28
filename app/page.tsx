@@ -125,6 +125,29 @@ const projects = [
 
 const experience = [
   {
+    role: 'Independent Consultant & Founder',
+    company: 'Narula Cloud & AI Consulting',
+    client: 'Cloud, AI and DevOps consulting',
+    location: 'Mumbai, India',
+    period: '30 May 2026 – Present',
+    points: [
+      'Founded Narula Cloud & AI Consulting, delivering independent cloud architecture, AI engineering and DevOps consulting.',
+      'Provide hands-on engineering through freelance client engagements, including Precisely via Uplers.'
+    ]
+  },
+  {
+    role: 'Freelance Senior AI DevOps Engineer',
+    company: 'Precisely',
+    client: 'Via Narula Cloud & AI Consulting · Uplers',
+    location: 'Mumbai, India',
+    period: '18 May 2026 – Present',
+    points: [
+      'Architected an agentic AI CI/CD auto-remediation framework with 15 specialized agents, RAG and MCP integrations for Jenkins and Bitbucket, with human approvals and pipeline validation.',
+      'Modernized and containerized enterprise CI/CD across Java, JavaScript and .NET applications; built reusable Jenkins agent images and integrated JFrog Artifactory.',
+      'Built AI-powered pipeline analysis and Copilot usage dashboards, automated Linear release comparison reports, and strengthened DevSecOps with CodeQL and cross-platform digital signing.'
+    ]
+  },
+  {
     role: 'Cloud Architect',
     company: 'Cyberender LLC',
     client: 'Capital One Bank',
